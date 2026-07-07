@@ -10,7 +10,6 @@ import { Project, ProjectCategory, PROJECTS } from "@/lib/Project-Data";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
 const PROJECT_FILTERS: ProjectCategory[] = [
   "All",
   "Web",
@@ -18,8 +17,6 @@ const PROJECT_FILTERS: ProjectCategory[] = [
   "Full-Stack",
   "Database",
 ];
-
-
 
 // ── helpers ──────────────────────────────────────────────
 
@@ -123,7 +120,9 @@ function CompactCard({ project, index }: { project: Project; index: number }) {
   const quickRotY = useRef<gsap.QuickToFunc | null>(null);
 
   useLayoutEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     if (prefersReducedMotion || !cardRef.current) return;
 
     quickRotX.current = gsap.quickTo(cardRef.current, "rotationX", {
@@ -206,7 +205,9 @@ export default function ProjectsSection() {
   const [displayFilter, setDisplayFilter] = useState<ProjectCategory>("All"); // what's actually rendered
 
   const filtered =
-    displayFilter === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === displayFilter);
+    displayFilter === "All"
+      ? PROJECTS
+      : PROJECTS.filter((p) => p.category === displayFilter);
   const [featured, ...rest] = filtered;
 
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -224,9 +225,10 @@ export default function ProjectsSection() {
   const isFirstFilterRun = useRef(true);
   const isTransitioning = useRef(false);
 
-  const registerButton = (filter: ProjectCategory) => (el: HTMLButtonElement | null) => {
-    if (el) buttonMap.current.set(filter, el);
-  };
+  const registerButton =
+    (filter: ProjectCategory) => (el: HTMLButtonElement | null) => {
+      if (el) buttonMap.current.set(filter, el);
+    };
 
   const moveIndicatorTo = (filter: ProjectCategory, animate: boolean) => {
     const btn = buttonMap.current.get(filter);
@@ -301,7 +303,9 @@ export default function ProjectsSection() {
 
   // Mount: entrance choreography + infinite background morph
   useLayoutEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     if (!gsap.parseEase("premiumOut")) {
       gsap.registerEase(
@@ -322,15 +326,29 @@ export default function ProjectsSection() {
       });
 
       introTl
-        .fromTo(eyebrowRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6 })
+        .fromTo(
+          eyebrowRef.current,
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.6 }
+        )
         .fromTo(
           headingRef.current,
           { clipPath: "inset(0 100% 0 0)" },
           { clipPath: "inset(0 0% 0 0)", duration: 1.1 },
           "-=0.3"
         )
-        .fromTo(subRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 }, "-=0.6")
-        .fromTo(filterBarRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.4");
+        .fromTo(
+          subRef.current,
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.6 },
+          "-=0.6"
+        )
+        .fromTo(
+          filterBarRef.current,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.5 },
+          "-=0.4"
+        );
 
       ScrollTrigger.create({
         trigger: contentRef.current,
@@ -382,7 +400,9 @@ export default function ProjectsSection() {
       return;
     }
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     if (prefersReducedMotion) {
       setDisplayFilter(activeFilter);
@@ -412,7 +432,9 @@ export default function ProjectsSection() {
   // reveal-in sequence and release the transition lock.
   useLayoutEffect(() => {
     if (isFirstFilterRun.current) return; // handled by the mount effect
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     if (prefersReducedMotion) return;
 
@@ -426,7 +448,9 @@ export default function ProjectsSection() {
 
   // Spotlight image parallax — recreated whenever the featured project changes
   useLayoutEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     if (prefersReducedMotion || !spotlightImageRef.current) return;
 
     const ctx = gsap.context(() => {
@@ -463,12 +487,18 @@ export default function ProjectsSection() {
       <div
         ref={blobARef}
         className="pointer-events-none absolute -top-32 right-[-120px] w-[480px] h-[480px] blur-[120px] opacity-60"
-        style={{ background: "var(--color-accent-soft)", borderRadius: "62% 38% 37% 63% / 59% 41% 59% 41%" }}
+        style={{
+          background: "var(--color-accent-soft)",
+          borderRadius: "62% 38% 37% 63% / 59% 41% 59% 41%",
+        }}
       />
       <div
         ref={blobBRef}
         className="pointer-events-none absolute bottom-[-140px] left-[-100px] w-[420px] h-[420px] blur-[120px] opacity-50"
-        style={{ background: "var(--color-accent-soft)", borderRadius: "41% 59% 59% 41% / 38% 62% 38% 62%" }}
+        style={{
+          background: "var(--color-accent-soft)",
+          borderRadius: "41% 59% 59% 41% / 38% 62% 38% 62%",
+        }}
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -496,30 +526,38 @@ export default function ProjectsSection() {
         </div>
 
         {/* filter bar — segmented control with a sliding indicator */}
-        <div
-          ref={filterBarRef}
-          className="relative inline-flex flex-wrap gap-1 mb-16 p-1 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
-        >
+        <div className="mb-12 overflow-x-auto scrollbar-hide">
           <div
-            ref={indicatorRef}
-            className="absolute top-1 bottom-1 left-0 rounded-full pointer-events-none"
-            style={{ background: "var(--gradient-accent)" }}
-          />
-          {PROJECT_FILTERS.map((filter) => {
-            const isActive = activeFilter === filter;
-            return (
-              <button
-                key={filter}
-                ref={registerButton(filter)}
-                onClick={() => handleFilterClick(filter)}
-                className={`relative z-10 px-5 py-2 rounded-full font-satoshi text-sm font-semibold ${
-                  isActive ? "text-white" : "text-[var(--color-text-muted)]"
-                }`}
-              >
-                {filter}
-              </button>
-            );
-          })}
+            ref={filterBarRef}
+            className="relative inline-flex min-w-max gap-1 p-1 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)]"
+          >
+            <div
+              ref={indicatorRef}
+              className="absolute top-1 bottom-1 left-0 rounded-full pointer-events-none"
+              style={{
+                background: "var(--gradient-accent)",
+              }}
+            />
+
+            {PROJECT_FILTERS.map((filter) => {
+              const isActive = activeFilter === filter;
+
+              return (
+                <button
+                  key={filter}
+                  ref={registerButton(filter)}
+                  onClick={() => handleFilterClick(filter)}
+                  className={`relative z-10 whitespace-nowrap px-4 sm:px-5 py-2 rounded-full font-satoshi text-sm font-semibold transition-colors ${
+                    isActive
+                      ? "text-white"
+                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
+                  }`}
+                >
+                  {filter}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* content */}
